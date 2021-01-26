@@ -23,14 +23,32 @@ namespace PeopleAPI.Controllers
             // Creates the database if not exists
             _context.Database.EnsureCreated();
 
-            // Adds a publisher
-            var author = new Author
+            if (_context.Author.Count() == 0)
             {
-                Name = "H. G. Wells"
-            };
-            _context.Author.Add(author);
-            _context.SaveChanges();
+                // Add an author
+                var author = new Author
+                {
+                    Name = "H. G. Wells"
+                };
+                _context.Author.Add(author);
+                _context.SaveChanges();
+            }
+
             return _context.Author.ToList();
+        }
+
+        [HttpGet("book")]
+        public IList<Book> GetBooks()
+        {
+            if (_context.Book.Count() == 0)
+            {
+                //add a book
+                var book = new Book { Title = "1984", ISBN = "123456787" };
+                _context.Book.Add(book);
+                _context.SaveChanges();
+            }
+
+            return _context.Book.ToList();
         }
 
     }

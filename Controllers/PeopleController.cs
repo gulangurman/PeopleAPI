@@ -43,7 +43,7 @@ namespace PeopleAPI.Controllers
             if (_context.Book.Count() == 0)
             {
                 //add a book
-                var book = new Book { Title = "1984", ISBN = "123456787" };
+                var book = new Book { Title = "1984", ISBN = "123456787", AuthorId=1 };
                 _context.Book.Add(book);
                 _context.SaveChanges();
             }

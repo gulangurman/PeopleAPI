@@ -11,6 +11,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 using Microsoft.EntityFrameworkCore;
+using PeopleAPI.Models;
+
 namespace PeopleAPI
 {
     public class Startup
@@ -26,8 +28,10 @@ namespace PeopleAPI
         public void ConfigureServices(IServiceCollection services)
         {
 
-            services.AddControllers();
-            services.AddDbContext<Models.PeopleContext>(o => o.UseMySQL("server=localhost;database=peopledb;user=peopledb_user;password=123456"));
+            services.AddControllers().AddNewtonsoftJson(options =>
+                options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+            ); 
+            services.AddDbContext<PeopleContext>(/*o => o.UseMySQL("server=localhost;database=peopledb;user=peopledb_user;password=123456")*/);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "PeopleAPI", Version = "v1" });
